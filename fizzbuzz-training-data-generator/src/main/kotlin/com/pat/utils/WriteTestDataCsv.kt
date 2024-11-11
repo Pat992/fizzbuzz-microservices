@@ -2,9 +2,11 @@ package com.pat.utils
 
 import java.io.File
 
-fun writeTestDataCsv(pathAndName: String, fizzBuzzList: List<Map<Int, String>>) =
-    File(pathAndName).printWriter().use { out ->
+fun writeTestDataCsv(pathAndFilename: String, fizzBuzzList: List<Map<Int, String>>) =
+    File(pathAndFilename).printWriter().use { out ->
+        out.println("input_number,fizz_buzz")
         fizzBuzzList.forEach { fizzBuzz ->
-            out.println("${fizzBuzz.keys.firstOrNull()},${fizzBuzz.entries.firstOrNull()}")
+            val key = fizzBuzz.keys.firstOrNull()
+            out.println("$key,${fizzBuzz[key]}")
         }
     }
