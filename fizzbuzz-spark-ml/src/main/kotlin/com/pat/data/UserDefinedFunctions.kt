@@ -4,7 +4,12 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.api.java.UDF1
 import org.apache.spark.sql.types.DataTypes
 
-fun registerFizzBuzzToNumberUdf(spark: SparkSession): Unit =
+fun registerUserDefinedFunctions(spark: SparkSession): Unit {
+    registerFizzBuzzToNumberUdf(spark)
+    registerFizzBuzzToArrayUdf(spark)
+}
+
+private fun registerFizzBuzzToNumberUdf(spark: SparkSession): Unit =
     spark.udf().register("fizzBuzzToNumber",
         UDF1 { fizzBuzz: String ->
             when (fizzBuzz) {
@@ -17,7 +22,7 @@ fun registerFizzBuzzToNumberUdf(spark: SparkSession): Unit =
         DataTypes.IntegerType
     )
 
-fun registerFizzBuzzToArrayUdf(spark: SparkSession): Unit =
+private fun registerFizzBuzzToArrayUdf(spark: SparkSession): Unit =
     spark.udf().register("fizzBuzzToArray",
         UDF1 { fizzBuzz: String ->
             when (fizzBuzz) {
