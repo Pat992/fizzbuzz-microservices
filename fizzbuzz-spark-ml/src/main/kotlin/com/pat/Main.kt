@@ -5,6 +5,8 @@ import com.pat.data.createModelData
 import com.pat.data.registerUserDefinedFunctions
 import com.pat.data.splitLearningData
 import com.pat.learning.createLogisticRegressionModel
+import com.pat.utils.logComplete
+import com.pat.utils.logInit
 import org.apache.spark.sql.SparkSession
 
 const val testDataPathAndName = "./test-data/fizzbuzz.csv"
@@ -39,10 +41,28 @@ fun main() {
         .master("local[*]")
         .getOrCreate()
         .use { spark ->
+            logInit("User defined functions", "Registering fizzBuzzToNumber & fizzBuzzToArray")
             registerUserDefinedFunctions(spark)
+            logComplete("DONE")
+
+            logInit("Dataset", "Creating learning dataset")
             val dataset = createLearningData(spark, testDataPathAndName)
+            logComplete("DONE")
+
+            logInit("Model-Dataset", "Creating model dataset")
             val modelDataset = createModelData(spark, dataset)
+            logComplete("DONE")
+
+            logInit("Training- and holdout-datasets", "Splitting model-dataset into training and holdout data")
             val (trainingAndTestData, holdoutData) = splitLearningData(modelDataset)
-            val lrModel = createLogisticRegressionModel(trainingAndTestData, holdoutData)
+            logComplete("DONE")
+
+            logInit("Linear regression model", "Initializing and configure linear regression model")
+            val lrModel = createLogisticRegressionModel(trainingAndTestData)
+            logComplete("DONE")
+
+            logInit("Holdout data", "Testing holdout data on the linear regression model")
+            lrModel.transform(holdoutData).show(100)
+            logComplete("DONE")
         }
 }
