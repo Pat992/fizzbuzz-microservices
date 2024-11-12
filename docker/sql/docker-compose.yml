@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: fizzbuzz
+      MYSQL_DATABASE: fizzbuzz_gateway
+      MYSQL_USER: fizz
+      MYSQL_PASSWORD: buzz
+    ports:
+      - '3307:3306'
+    volumes:
+      - .docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
