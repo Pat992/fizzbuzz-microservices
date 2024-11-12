@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/core/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fizzbuzz-database-service/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fizzbuzz-gateway/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fizzbuzz-logging-service/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fizzbuzz-orchestration-service/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fizzbuzz-spark-ml/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fizzbuzz-spark-ml/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fizzbuzz-training-data-generator/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fizzbuzz-training-data-generator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fizzbuzz-transform-service/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
