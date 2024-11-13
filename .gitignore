@@ -37,5 +37,5 @@ build/
 ### Mac OS ###
 .DS_Store
 
-### Testdata that might be big
-test-data/fizzbuzz.csv
+### DrawIO temp-files
+docs/.xdp-.$diagram.drawio**
