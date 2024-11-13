@@ -1,18 +1,40 @@
 package com.pat.fizzbuzz_gateway.service
 
+import com.pat.dto.events.FizzBuzzRequestEvent
 import com.pat.dto.web.FizzBuzzRequestDto
 import com.pat.dto.web.FizzBuzzResponseDto
 import com.pat.dto.web.FizzBuzzResultResponseDto
+import com.pat.properties.KafkaTopics
 import com.pat.types.FizzBuzzStatus
+import org.apache.kafka.clients.producer.ProducerRecord
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import java.security.Principal
 import java.time.OffsetDateTime
 import java.util.*
 
 @Service
-class FizzBuzzServiceImpl : FizzBuzzService {
-    override fun fizzBuzzCreateRequest(request: FizzBuzzRequestDto, principal: Principal): FizzBuzzResponseDto =
-        FizzBuzzResponseDto(UUID.randomUUID(), OffsetDateTime.now())
+class FizzBuzzServiceImpl(private val kafkaTemplate: KafkaTemplate<UUID, FizzBuzzRequestEvent>) : FizzBuzzService {
+
+    override fun fizzBuzzCreateRequest(request: FizzBuzzRequestDto, principal: Principal): FizzBuzzResponseDto {
+        val ticket = UUID.randomUUID()
+        val fizzBuzzRequestEvent = FizzBuzzRequestEvent(
+            ticket,
+            principal.name,
+            request.number,
+            OffsetDateTime.now()
+        )
+
+        val producerRecord = ProducerRecord(
+            KafkaTopics.GATEWAY_EVENT_TOPIC,
+            ticket,
+            fizzBuzzRequestEvent
+        )
+
+        kafkaTemplate.send(producerRecord)
+
+        return FizzBuzzResponseDto(fizzBuzzRequestEvent.ticket, fizzBuzzRequestEvent.requestCreatedAt)
+    }
 
     override fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto =
         FizzBuzzResultResponseDto(
