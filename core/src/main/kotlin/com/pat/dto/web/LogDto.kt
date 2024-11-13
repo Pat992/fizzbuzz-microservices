@@ -1,14 +1,14 @@
-package com.pat.dto.commands
+package com.pat.dto.web
 
 import com.pat.types.FizzBuzzStatus
 import java.time.OffsetDateTime
 import java.util.*
 
-data class LogCreateCommand(
-    override val ticket: UUID,
-    override val user: String,
-    override val inputNumber: Int,
+data class LogDto(
+    val ticket: UUID,
+    val user: String,
+    val inputNumber: Int,
     val status: FizzBuzzStatus,
     val message: String,
     val updatedAt: OffsetDateTime,
-) : BaseCommand
+)

@@ -1,5 +1,7 @@
 package com.pat.fizzbuzz_gateway.web.controller
 
+import com.pat.dto.web.LogResponseDto
+import com.pat.fizzbuzz_gateway.service.LogService
 import com.pat.types.LogOrderType
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,12 +13,12 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/v1/log")
-class LogController {
+class LogController(private val logService: LogService) {
 
     @GetMapping
     fun getLogs(
         @RequestParam(required = false) user: String?,
         @RequestParam(required = false) ticket: UUID?,
-        @RequestParam(required = false) orderBy: LogOrderType = LogOrderType.DATE
-    ): ResponseEntity<Unit> = ResponseEntity(HttpStatus.OK)
+        @RequestParam(required = false) orderBy: LogOrderType = LogOrderType.DATE,
+    ): ResponseEntity<LogResponseDto> = ResponseEntity(logService.getLogs(user, ticket, orderBy), HttpStatus.OK)
 }

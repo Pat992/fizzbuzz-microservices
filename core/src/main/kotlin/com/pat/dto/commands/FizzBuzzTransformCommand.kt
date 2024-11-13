@@ -4,6 +4,6 @@ import java.util.*
 
 data class FizzBuzzTransformCommand(
     override val ticket: UUID,
-    override val userId: Int,
+    override val user: String,
     override val inputNumber: Int,
 ) : BaseCommand
