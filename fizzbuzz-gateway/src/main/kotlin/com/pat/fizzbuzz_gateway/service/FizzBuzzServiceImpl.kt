@@ -22,7 +22,9 @@ class FizzBuzzServiceImpl(private val kafkaTemplate: KafkaTemplate<UUID, FizzBuz
             ticket,
             principal.name,
             request.number,
-            OffsetDateTime.now()
+            this.javaClass.name,
+            OffsetDateTime.now(),
+            "Request received successfully."
         )
 
         val producerRecord = ProducerRecord(
@@ -33,7 +35,7 @@ class FizzBuzzServiceImpl(private val kafkaTemplate: KafkaTemplate<UUID, FizzBuz
 
         kafkaTemplate.send(producerRecord)
 
-        return FizzBuzzResponseDto(fizzBuzzRequestEvent.ticket, fizzBuzzRequestEvent.requestCreatedAt)
+        return FizzBuzzResponseDto(fizzBuzzRequestEvent.ticket, fizzBuzzRequestEvent.eventCreatedAt)
     }
 
     override fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto =
