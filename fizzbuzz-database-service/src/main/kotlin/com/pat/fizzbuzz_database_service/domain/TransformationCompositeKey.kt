@@ -4,6 +4,6 @@ import java.io.Serializable
 import java.util.*
 
 class TransformationCompositeKey(
-    val user: String,
-    val ticket: UUID,
+    val user: String = "",
+    val ticket: UUID = UUID.randomUUID()
 ) : Serializable

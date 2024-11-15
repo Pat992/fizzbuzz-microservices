@@ -13,19 +13,27 @@ import java.util.*
 @IdClass(TransformationCompositeKey::class)
 class TransformationEntity(
     @Id
-    val user: String,
+    @Column
+    val user: String = "",
+
     @Id
-    val ticket: UUID,
     @Column
-    val inputNumber: Int,
+    val ticket: UUID = UUID.randomUUID(),
+
     @Column
-    var result: String?,
+    val inputNumber: Int = 0,
+
     @Column
-    val requestCreatedAt: Timestamp,
+    var result: String? = null,
+
     @Column
-    var requestCompletedAt: Timestamp?,
+    val requestCreatedAt: Timestamp? = null,
+
     @Column
-    var status: FizzBuzzStatus
+    var requestCompletedAt: Timestamp? = null,
+
+    @Column
+    var status: FizzBuzzStatus = FizzBuzzStatus.REQUEST_RECEIVED_SUCCESS,
 )
 
 fun DatabaseUpdateCommand.toTransformationEntity(isCompleted: Boolean = false, completedDate: OffsetDateTime? = null) =

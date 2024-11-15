@@ -44,10 +44,10 @@ USE transformation_database;
 CREATE TABLE IF NOT EXISTS transformations (
   user VARCHAR(50) NOT NULL,
   ticket BINARY(16) NOT NULL,
-  inputNumber INT NOT NULL,
+  input_number INT NOT NULL,
   result VARCHAR(50),
-  requestCreatedAt TIMESTAMP NOT NULL,
-  requestCompletedAt TIMESTAMP,
+  request_created_at TIMESTAMP NOT NULL,
+  request_completed_at TIMESTAMP,
   status VARCHAR(50) NOT NULL,
   PRIMARY KEY (user, ticket)
 );
@@ -58,10 +58,10 @@ CREATE TABLE IF NOT EXISTS logs (
   id INT NOT NULL,
   user VARCHAR(50) NOT NULL,
   ticket BINARY(16) NOT NULL,
-  inputNumber INT NOT NULL,
-  packageName VARCHAR(100) NOT NULL,
+  input_number INT NOT NULL,
+  package_name VARCHAR(100) NOT NULL,
   status VARCHAR(50) NOT NULL,
   message VARCHAR(100) NOT NULL,
-  updatedAt TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
 )

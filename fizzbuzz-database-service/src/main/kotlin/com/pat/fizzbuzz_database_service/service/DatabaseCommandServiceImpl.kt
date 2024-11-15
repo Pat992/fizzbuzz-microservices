@@ -25,7 +25,10 @@ class DatabaseCommandServiceImpl(
 
     override fun createOrUpdateEntry(databaseUpdateCommand: DatabaseUpdateCommand) {
         try {
-            val transformationEntity = databaseUpdateCommand.toTransformationEntity()
+            val transformationEntity = databaseUpdateCommand.toTransformationEntity(
+                databaseUpdateCommand.type != DatabaseTypes.CREATE,
+                if (databaseUpdateCommand.type == DatabaseTypes.CREATE) null else OffsetDateTime.now(),
+            )
             if (databaseUpdateCommand.type == DatabaseTypes.CREATE
             ) {
                 createEntry(transformationEntity)
