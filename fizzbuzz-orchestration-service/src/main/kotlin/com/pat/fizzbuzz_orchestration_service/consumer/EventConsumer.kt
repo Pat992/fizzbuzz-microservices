@@ -26,7 +26,8 @@ class EventConsumer(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
             val transformCommand = FizzBuzzTransformCommand(
                 databaseUpdateSuccessEvent.ticket,
                 databaseUpdateSuccessEvent.user,
-                databaseUpdateSuccessEvent.inputNumber
+                databaseUpdateSuccessEvent.inputNumber,
+                databaseUpdateSuccessEvent.packageName,
             )
             val producerRecord = ProducerRecord(
                 KafkaTopics.TRANSFORM_COMMAND_TOPIC,
@@ -75,7 +76,7 @@ class EventConsumer(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
     @KafkaHandler
     fun transformSuccessEventHandler(@Payload transformSuccessEvent: FizzBuzzTransformSuccessEvent) {
         val databaseUpdateCommand = transformSuccessEvent.toDatabaseUpdateCommand(
-            null,
+            transformSuccessEvent.result,
             null,
             FizzBuzzStatus.TRANSFORM_SUCCESS,
             DatabaseTypes.UPDATE,

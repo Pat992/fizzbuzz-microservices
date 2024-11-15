@@ -6,4 +6,5 @@ interface BaseCommand {
     val user: String
     val inputNumber: Int
     val ticket: UUID
+    val packageName: String
 }

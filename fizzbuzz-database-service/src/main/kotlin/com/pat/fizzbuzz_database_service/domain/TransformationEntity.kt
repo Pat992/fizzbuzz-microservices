@@ -33,6 +33,7 @@ class TransformationEntity(
     var requestCompletedAt: Timestamp? = null,
 
     @Column
+    @Enumerated(EnumType.STRING)
     var status: FizzBuzzStatus = FizzBuzzStatus.REQUEST_RECEIVED_SUCCESS,
 )
 
@@ -47,3 +48,12 @@ fun DatabaseUpdateCommand.toTransformationEntity(isCompleted: Boolean = false, c
         this.status
     )
 
+fun TransformationEntity.toUpdateEntity(existingEntity: TransformationEntity) = TransformationEntity(
+    existingEntity.user,
+    existingEntity.ticket,
+    existingEntity.inputNumber,
+    this.result,
+    existingEntity.requestCreatedAt,
+    this.requestCompletedAt,
+    this.status
+)

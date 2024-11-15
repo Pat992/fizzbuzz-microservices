@@ -11,6 +11,7 @@ data class DatabaseUpdateCommand(
     override val ticket: UUID,
     override val user: String,
     override val inputNumber: Int,
+    override val packageName: String,
     val result: String?,
     val requestCreatedAt: OffsetDateTime,
     val requestCompletedAt: OffsetDateTime?,

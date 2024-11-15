@@ -8,7 +8,7 @@ data class LogCreateCommand(
     override val ticket: UUID,
     override val user: String,
     override val inputNumber: Int,
-    val packageName: String,
+    override val packageName: String,
     val status: FizzBuzzStatus,
     val message: String,
     val updatedAt: OffsetDateTime,

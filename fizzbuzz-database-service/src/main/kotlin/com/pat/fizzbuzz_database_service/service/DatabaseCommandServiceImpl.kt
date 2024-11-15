@@ -8,6 +8,7 @@ import com.pat.exceptions.EntryDoesNotExistException
 import com.pat.fizzbuzz_database_service.domain.TransformationCompositeKey
 import com.pat.fizzbuzz_database_service.domain.TransformationEntity
 import com.pat.fizzbuzz_database_service.domain.toTransformationEntity
+import com.pat.fizzbuzz_database_service.domain.toUpdateEntity
 import com.pat.fizzbuzz_database_service.repository.TransformationRepository
 import com.pat.properties.KafkaTopics
 import com.pat.types.DatabaseTypes
@@ -38,28 +39,32 @@ class DatabaseCommandServiceImpl(
             val databaseUpdateSuccessEvent = databaseUpdateCommand.toDatabaseUpdateSuccessEvent(
                 this.javaClass.name,
                 OffsetDateTime.now(),
-                if (databaseUpdateCommand.type == DatabaseTypes.CREATE) "Entry created successfully." else "Entry updated successfully.",
+                if (databaseUpdateCommand.type == DatabaseTypes.CREATE)
+                    "Entry created successfully - ticket: ${databaseUpdateCommand.ticket}, user: ${databaseUpdateCommand.user}"
+                else
+                    "Entry updated successfully - ticket: ${databaseUpdateCommand.ticket}, user: ${databaseUpdateCommand.user}",
                 databaseUpdateCommand.result ?: ""
             )
-
-            val producerRecordException = ProducerRecord(
+            val producerRecord = ProducerRecord(
                 KafkaTopics.DATABASE_EVENT_TOPIC,
                 databaseUpdateSuccessEvent.ticket,
                 databaseUpdateSuccessEvent as Any
             )
-            kafkaTemplate.send(producerRecordException)
+
+            kafkaTemplate.send(producerRecord)
         } catch (e: Exception) {
+            println(e)
             val databaseUpdateFailedEvent = databaseUpdateCommand.toDatabaseUpdateFailedEvent(
                 this.javaClass.name,
                 OffsetDateTime.now(),
                 e.localizedMessage
             )
-
             val producerRecordException = ProducerRecord(
                 KafkaTopics.DATABASE_EVENT_TOPIC,
                 databaseUpdateFailedEvent.ticket,
                 databaseUpdateFailedEvent as Any
             )
+
             kafkaTemplate.send(producerRecordException)
         }
     }
@@ -79,16 +84,15 @@ class DatabaseCommandServiceImpl(
     }
 
     private fun updateEntry(transformationEntity: TransformationEntity): TransformationEntity {
-        if (!transformationRepository.existsById(
-                TransformationCompositeKey(
-                    transformationEntity.user,
-                    transformationEntity.ticket
-                )
+        val existingEntity = transformationRepository.findById(
+            TransformationCompositeKey(
+                transformationEntity.user,
+                transformationEntity.ticket
             )
-        ) {
-            throw EntryDoesNotExistException("Entry for user: ${transformationEntity.user} and ticket: ${transformationEntity.ticket} does not exist.")
+        ).orElseThrow {
+            EntryDoesNotExistException("Entry for user: ${transformationEntity.user} and ticket: ${transformationEntity.ticket} does not exist.")
         }
 
-        return transformationRepository.save(transformationEntity)
+        return transformationRepository.save(transformationEntity.toUpdateEntity(existingEntity))
     }
 }

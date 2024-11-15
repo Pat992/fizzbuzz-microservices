@@ -35,6 +35,7 @@ fun BaseEvent.toDatabaseUpdateCommand(
     this.ticket,
     this.user,
     this.inputNumber,
+    this.packageName,
     result,
     this.eventCreatedAt,
     requestCompletedAt,
