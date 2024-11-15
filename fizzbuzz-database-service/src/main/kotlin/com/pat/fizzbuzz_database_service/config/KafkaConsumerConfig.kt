@@ -1,4 +1,4 @@
-package com.pat.fizzbuzz_orchestration_service.config
+package com.pat.fizzbuzz_database_service.config
 
 import com.pat.config.buildKafkaListenerContainerFactory
 import com.pat.config.consumerConfigs
@@ -12,10 +12,10 @@ import org.springframework.kafka.core.KafkaTemplate
 import java.util.*
 
 @Configuration
-class KafkaConsumerConfig() {
+class KafkaConsumerConfig {
     @Bean
     fun kafkaConsumerFactory(): ConsumerFactory<UUID, Any> =
-        DefaultKafkaConsumerFactory(consumerConfigs(KafkaConsumerGroups.ORCHESTRATION_GROUP))
+        DefaultKafkaConsumerFactory(consumerConfigs(KafkaConsumerGroups.DATABASE_GROUP))
 
 
     @Bean

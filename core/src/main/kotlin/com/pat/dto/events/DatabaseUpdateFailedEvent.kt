@@ -11,6 +11,6 @@ data class DatabaseUpdateFailedEvent(
     override val packageName: String,
     override val eventCreatedAt: OffsetDateTime,
     override val message: String,
-    val result: String,
+    val result: String?,
     val type: DatabaseTypes,
 ) : BaseEvent

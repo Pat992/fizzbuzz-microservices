@@ -1,14 +1,14 @@
-CREATE DATABASE IF NOT EXISTS fizzbuzz_gateway;
-CREATE DATABASE IF NOT EXISTS fizzbuzz_database;
+CREATE DATABASE IF NOT EXISTS gateway_database;
+CREATE DATABASE IF NOT EXISTS transformation_database;
 CREATE DATABASE IF NOT EXISTS logging_database;
 
-GRANT CREATE, ALTER, INDEX, LOCK TABLES, REFERENCES, UPDATE, DELETE, DROP, SELECT, INSERT ON `fizzbuzz_gateway`.* TO 'fizz'@'%';
-GRANT CREATE, ALTER, INDEX, LOCK TABLES, REFERENCES, UPDATE, DELETE, DROP, SELECT, INSERT ON `fizzbuzz_database`.* TO 'fizz'@'%';
+GRANT CREATE, ALTER, INDEX, LOCK TABLES, REFERENCES, UPDATE, DELETE, DROP, SELECT, INSERT ON `gateway_database`.* TO 'fizz'@'%';
+GRANT CREATE, ALTER, INDEX, LOCK TABLES, REFERENCES, UPDATE, DELETE, DROP, SELECT, INSERT ON `transformation_database`.* TO 'fizz'@'%';
 GRANT CREATE, ALTER, INDEX, LOCK TABLES, REFERENCES, UPDATE, DELETE, DROP, SELECT, INSERT ON `logging_database`.* TO 'fizz'@'%';
 
 FLUSH PRIVILEGES;
 
-USE fizzbuzz_gateway;
+USE gateway_database;
 
 CREATE TABLE IF NOT EXISTS users (
   username VARCHAR(50) NOT NULL,
@@ -39,7 +39,7 @@ INSERT INTO authorities (username, authority)
   ('admin', 'ROLE_EMPLOYEE'),
   ('admin', 'ROLE_ADMIN');
 
-USE fizzbuzz_database;
+USE transformation_database;
 
 CREATE TABLE IF NOT EXISTS transformations (
   user VARCHAR(50) NOT NULL,

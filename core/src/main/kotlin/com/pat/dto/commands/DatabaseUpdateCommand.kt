@@ -1,5 +1,7 @@
 package com.pat.dto.commands
 
+import com.pat.dto.events.DatabaseUpdateFailedEvent
+import com.pat.dto.events.DatabaseUpdateSuccessEvent
 import com.pat.types.DatabaseTypes
 import com.pat.types.FizzBuzzStatus
 import java.time.OffsetDateTime
@@ -15,3 +17,35 @@ data class DatabaseUpdateCommand(
     val status: FizzBuzzStatus,
     val type: DatabaseTypes
 ) : BaseCommand
+
+
+fun DatabaseUpdateCommand.toDatabaseUpdateFailedEvent(
+    packageName: String,
+    eventCreatedAt: OffsetDateTime,
+    message: String,
+) = DatabaseUpdateFailedEvent(
+    this.ticket,
+    this.user,
+    this.inputNumber,
+    packageName,
+    eventCreatedAt,
+    message,
+    this.result,
+    this.type,
+)
+
+fun DatabaseUpdateCommand.toDatabaseUpdateSuccessEvent(
+    packageName: String,
+    eventCreatedAt: OffsetDateTime,
+    message: String,
+    result: String
+) = DatabaseUpdateSuccessEvent(
+    this.ticket,
+    this.user,
+    this.inputNumber,
+    packageName,
+    eventCreatedAt,
+    message,
+    result,
+    this.type,
+)
