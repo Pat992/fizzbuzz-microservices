@@ -24,7 +24,7 @@
 
     <modules>
         <module>core</module>
-        <!--        <module>fizzbuzz-logging-service</module>-->
+        <module>fizzbuzz-logging-service</module>
         <module>fizzbuzz-orchestration-service</module>
         <module>fizzbuzz-transform-service</module>
         <module>fizzbuzz-database-service</module>
