@@ -1,45 +1,14 @@
 package com.pat.dto.events
 
-import com.pat.dto.commands.DatabaseUpdateCommand
-import com.pat.dto.commands.LogCreateCommand
-import com.pat.types.DatabaseTypes
-import com.pat.types.FizzBuzzStatus
 import java.time.OffsetDateTime
 import java.util.*
 
 data class FizzBuzzTransformSuccessEvent(
-    val ticket: UUID,
-    val user: String,
-    val inputNumber: Int,
-    val packageName: String,
-    val eventCreatedAt: OffsetDateTime,
-    val message: String,
+    override val ticket: UUID,
+    override val user: String,
+    override val inputNumber: Int,
+    override val packageName: String,
+    override val eventCreatedAt: OffsetDateTime,
+    override val message: String,
     val result: String,
-)
-
-fun FizzBuzzTransformSuccessEvent.toLogCreateCommand(fizzBuzzStatus: FizzBuzzStatus): LogCreateCommand =
-    LogCreateCommand(
-        this.ticket,
-        this.user,
-        this.inputNumber,
-        this.packageName,
-        fizzBuzzStatus,
-        this.message,
-        this.eventCreatedAt
-    )
-
-fun FizzBuzzTransformSuccessEvent.toDatabaseUpdateCommand(
-    result: String?,
-    requestCompletedAt: OffsetDateTime?,
-    status: FizzBuzzStatus,
-    type: DatabaseTypes
-) = DatabaseUpdateCommand(
-    this.ticket,
-    this.user,
-    this.inputNumber,
-    result,
-    this.eventCreatedAt,
-    requestCompletedAt,
-    status,
-    type
-)
+) : BaseEvent
