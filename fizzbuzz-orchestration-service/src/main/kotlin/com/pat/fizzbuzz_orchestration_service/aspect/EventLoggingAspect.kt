@@ -34,7 +34,7 @@ class EventLoggingAspect(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
         return baseAroundAspect(proceedingJoinPoint, logCreateCommand)
     }
 
-    @Around("$AOPPackageName.requestEventHandler()")
+    @Around("$AOPPackageName.requestEventHandlerPointcut()")
     fun requestEventHandlerAdvice(proceedingJoinPoint: ProceedingJoinPoint): Any? {
         val fizzBuzzRequestEvent = proceedingJoinPoint.args.first() as FizzBuzzRequestEvent
         val logCreateCommand = fizzBuzzRequestEvent.toLogCreateCommand(FizzBuzzStatus.REQUEST_RECEIVED_SUCCESS)
@@ -42,7 +42,7 @@ class EventLoggingAspect(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
         return baseAroundAspect(proceedingJoinPoint, logCreateCommand)
     }
 
-    @Around("$AOPPackageName.transformFailedEventHandler()")
+    @Around("$AOPPackageName.transformFailedEventHandlerPointcut()")
     fun aroundTransformFailedEventHandlerAdvice(proceedingJoinPoint: ProceedingJoinPoint): Any? {
         val transformFailedEvent = proceedingJoinPoint.args.first() as FizzBuzzTransformFailedEvent
         val logCreateCommand = transformFailedEvent.toLogCreateCommand(FizzBuzzStatus.TRANSFORM_FAILED)
@@ -50,7 +50,7 @@ class EventLoggingAspect(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
         return baseAroundAspect(proceedingJoinPoint, logCreateCommand)
     }
 
-    @Around("$AOPPackageName.transformSuccessEventHandler()")
+    @Around("$AOPPackageName.transformSuccessEventHandlerPointcut()")
     fun aroundTransformSuccessEventHandlerAdvice(proceedingJoinPoint: ProceedingJoinPoint): Any? {
         val transformSuccessEvent = proceedingJoinPoint.args.first() as FizzBuzzTransformSuccessEvent
         val logCreateCommand = transformSuccessEvent.toLogCreateCommand(FizzBuzzStatus.TRANSFORM_SUCCESS)
@@ -70,7 +70,7 @@ class EventLoggingAspect(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
             res = proceedingJoinPoint.proceed()
         } catch (e: Exception) {
             println(e)
-            
+
             val logCreateCommandException =
                 logCreateCommand.copy(
                     status = FizzBuzzStatus.ORCHESTRATION_SERVICE_FAILED,

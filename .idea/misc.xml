@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/fizzbuzz-orchestration-service/pom.xml" />
         <option value="$PROJECT_DIR$/fizzbuzz-transform-service/pom.xml" />
         <option value="$PROJECT_DIR$/fizzbuzz-logging-service/pom.xml" />
+        <option value="$PROJECT_DIR$/core/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
