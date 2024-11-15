@@ -1,5 +1,5 @@
 services:
-  db:
+  fizzbuzz-db:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: fizzbuzz

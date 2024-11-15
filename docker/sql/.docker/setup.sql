@@ -38,3 +38,30 @@ INSERT INTO authorities (username, authority)
   ('buzz', 'ROLE_EMPLOYEE'),
   ('admin', 'ROLE_EMPLOYEE'),
   ('admin', 'ROLE_ADMIN');
+
+USE fizzbuzz_database;
+
+CREATE TABLE IF NOT EXISTS transformations (
+  user VARCHAR(50) NOT NULL,
+  ticket BINARY(16) NOT NULL,
+  inputNumber INT NOT NULL,
+  result VARCHAR(50),
+  requestCreatedAt TIMESTAMP NOT NULL,
+  requestCompletedAt TIMESTAMP,
+  status VARCHAR(50) NOT NULL,
+  PRIMARY KEY (user, ticket)
+);
+
+USE logging_database;
+
+CREATE TABLE IF NOT EXISTS logs (
+  id INT NOT NULL,
+  user VARCHAR(50) NOT NULL,
+  ticket BINARY(16) NOT NULL,
+  inputNumber INT NOT NULL,
+  packageName VARCHAR(100) NOT NULL,
+  status VARCHAR(50) NOT NULL,
+  message VARCHAR(100) NOT NULL,
+  updatedAt TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+)
