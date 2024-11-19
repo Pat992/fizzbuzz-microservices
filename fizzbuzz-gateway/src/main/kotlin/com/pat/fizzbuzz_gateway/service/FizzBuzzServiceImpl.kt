@@ -9,12 +9,16 @@ import com.pat.types.FizzBuzzStatus
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
+import org.springframework.web.client.RestTemplate
 import java.security.Principal
 import java.time.OffsetDateTime
 import java.util.*
 
 @Service
-class FizzBuzzServiceImpl(private val kafkaTemplate: KafkaTemplate<UUID, FizzBuzzRequestEvent>) : FizzBuzzService {
+class FizzBuzzServiceImpl(
+    private val kafkaTemplate: KafkaTemplate<UUID, FizzBuzzRequestEvent>,
+    private val restTemplate: RestTemplate,
+) : FizzBuzzService {
 
     override fun fizzBuzzCreateRequest(request: FizzBuzzRequestDto, principal: Principal): FizzBuzzResponseDto {
         val ticket = UUID.randomUUID()
