@@ -1,6 +1,8 @@
 package com.pat.fizzbuzz_database_service.domain
 
 import com.pat.dto.commands.DatabaseUpdateCommand
+import com.pat.dto.web.FizzBuzzResultResponseDto
+import com.pat.mapper.toOffsetDateTime
 import com.pat.mapper.toSqlTimestamp
 import com.pat.types.FizzBuzzStatus
 import jakarta.persistence.*
@@ -56,4 +58,13 @@ fun TransformationEntity.toUpdateEntity(existingEntity: TransformationEntity) = 
     existingEntity.requestCreatedAt,
     this.requestCompletedAt,
     this.status
+)
+
+fun TransformationEntity.toResultResponseDto() = FizzBuzzResultResponseDto(
+    this.result ?: "",
+    this.inputNumber,
+    this.ticket,
+    this.requestCreatedAt?.toOffsetDateTime() ?: OffsetDateTime.now(),
+    this.requestCompletedAt?.toOffsetDateTime() ?: OffsetDateTime.now(),
+    this.status,
 )

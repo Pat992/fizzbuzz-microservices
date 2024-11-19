@@ -11,6 +11,4 @@ data class FizzBuzzResultResponseDto(
     val requestCreatedAt: OffsetDateTime,
     val requestCompletedAt: OffsetDateTime?,
     val status: FizzBuzzStatus,
-    val hasError: Boolean,
-    val errorMessage: String?,
 )

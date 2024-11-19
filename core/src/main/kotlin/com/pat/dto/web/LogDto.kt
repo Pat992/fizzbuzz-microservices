@@ -8,6 +8,7 @@ data class LogDto(
     val ticket: UUID,
     val user: String,
     val inputNumber: Int,
+    val packageName: String,
     val status: FizzBuzzStatus,
     val message: String,
     val updatedAt: OffsetDateTime,

@@ -13,7 +13,7 @@ class LogServiceImpl : LogService {
     override fun getLogs(user: String?, ticket: UUID?, orderBy: LogOrderType): LogResponseDto =
         LogResponseDto(
             listOf(
-                LogDto(UUID.randomUUID(), "user", 1, FizzBuzzStatus.COMPLETED, "", OffsetDateTime.now())
+                LogDto(UUID.randomUUID(), "user", 1, "", FizzBuzzStatus.COMPLETED, "", OffsetDateTime.now())
             )
         )
 }

@@ -5,11 +5,12 @@ import com.pat.dto.web.FizzBuzzRequestDto
 import com.pat.dto.web.FizzBuzzResponseDto
 import com.pat.dto.web.FizzBuzzResultResponseDto
 import com.pat.properties.KafkaTopics
-import com.pat.types.FizzBuzzStatus
+import com.pat.properties.MicroservicesIpConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.getForObject
 import java.security.Principal
 import java.time.OffsetDateTime
 import java.util.*
@@ -43,14 +44,5 @@ class FizzBuzzServiceImpl(
     }
 
     override fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto =
-        FizzBuzzResultResponseDto(
-            "1",
-            1,
-            ticket,
-            OffsetDateTime.now(),
-            OffsetDateTime.now(),
-            FizzBuzzStatus.COMPLETED,
-            false,
-            null
-        )
+        restTemplate.getForObject("${MicroservicesIpConfig.DATABASE_SERVICE_URL}/api/v1/result/$ticket/${principal.name}")
 }
