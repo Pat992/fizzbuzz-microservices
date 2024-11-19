@@ -3,7 +3,7 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: fizzbuzz
-      MYSQL_DATABASE: fizzbuzz_gateway
+      MYSQL_DATABASE: gateway_database
       MYSQL_USER: fizz
       MYSQL_PASSWORD: buzz
     ports:

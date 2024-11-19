@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS transformations (
 USE logging_database;
 
 CREATE TABLE IF NOT EXISTS logs (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   user VARCHAR(50) NOT NULL,
   ticket BINARY(16) NOT NULL,
   input_number INT NOT NULL,
@@ -64,4 +64,4 @@ CREATE TABLE IF NOT EXISTS logs (
   message VARCHAR(100) NOT NULL,
   updated_at TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
-)
+);
