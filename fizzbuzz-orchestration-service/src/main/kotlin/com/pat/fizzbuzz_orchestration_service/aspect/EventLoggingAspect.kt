@@ -69,8 +69,6 @@ class EventLoggingAspect(private val kafkaTemplate: KafkaTemplate<UUID, Any>) {
             kafkaTemplate.send(producerRecord)
             res = proceedingJoinPoint.proceed()
         } catch (e: Exception) {
-            println(e)
-
             val logCreateCommandException =
                 logCreateCommand.copy(
                     status = FizzBuzzStatus.ORCHESTRATION_SERVICE_FAILED,

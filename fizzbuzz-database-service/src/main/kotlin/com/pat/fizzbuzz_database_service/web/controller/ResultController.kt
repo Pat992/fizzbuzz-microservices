@@ -13,6 +13,7 @@ import java.util.*
 @RestController
 @RequestMapping("/api/v1/result")
 class ResultController(private val resultService: ResultService) {
+    
     @GetMapping("{ticket}/{username}")
     fun getResult(
         @PathVariable("ticket") ticket: UUID,
