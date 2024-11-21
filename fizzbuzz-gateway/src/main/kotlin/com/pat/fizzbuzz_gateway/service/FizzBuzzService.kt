@@ -8,5 +8,5 @@ import java.util.*
 
 interface FizzBuzzService {
     fun fizzBuzzCreateRequest(request: FizzBuzzRequestDto, principal: Principal): FizzBuzzResponseDto
-    fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto
+    fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto?
 }

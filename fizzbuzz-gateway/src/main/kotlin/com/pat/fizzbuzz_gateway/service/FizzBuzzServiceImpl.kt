@@ -9,6 +9,7 @@ import com.pat.properties.MicroservicesIpConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import java.security.Principal
@@ -43,6 +44,9 @@ class FizzBuzzServiceImpl(
         return FizzBuzzResponseDto(fizzBuzzRequestEvent.ticket, fizzBuzzRequestEvent.eventCreatedAt)
     }
 
-    override fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto =
-        restTemplate.getForObject("${MicroservicesIpConfig.DATABASE_SERVICE_URL}/api/v1/result/$ticket/${principal.name}")
+    override fun fizzBuzzGetResult(ticket: UUID, principal: Principal): FizzBuzzResultResponseDto? = try {
+        restTemplate.getForObject<FizzBuzzResultResponseDto?>("${MicroservicesIpConfig.DATABASE_SERVICE_URL}/api/v1/result/$ticket/${principal.name}")
+    } catch (e: HttpClientErrorException) {
+        null
+    }
 }

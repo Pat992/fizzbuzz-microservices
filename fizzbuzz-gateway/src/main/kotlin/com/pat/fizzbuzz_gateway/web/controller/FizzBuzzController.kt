@@ -26,8 +26,7 @@ class FizzBuzzController(private val fizzBuzzService: FizzBuzzService) {
     fun fizzBuzzGetResult(
         @PathVariable("ticket") ticket: UUID,
         principal: Principal,
-    ): ResponseEntity<FizzBuzzResultResponseDto> =
-        ResponseEntity(
-            fizzBuzzService.fizzBuzzGetResult(ticket, principal), HttpStatus.OK
-        )
+    ): ResponseEntity<FizzBuzzResultResponseDto?> = fizzBuzzService.fizzBuzzGetResult(ticket, principal).let {
+        ResponseEntity(it, if (it == null) HttpStatus.NOT_FOUND else HttpStatus.OK)
+    }
 }
