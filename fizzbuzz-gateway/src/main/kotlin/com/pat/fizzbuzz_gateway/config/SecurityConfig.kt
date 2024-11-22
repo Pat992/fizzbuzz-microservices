@@ -24,6 +24,11 @@ class SecurityConfig {
     @Bean
     fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
         .authorizeHttpRequests {
+            it.requestMatchers(
+                "/swagger-ui/**",
+                "/swagger-resources/*",
+                "/v3/api-docs/**"
+            ).permitAll()
             it.requestMatchers(HttpMethod.GET, "/api/v1/fizzbuzz/**").hasAnyRole("EMPLOYEE", "ADMIN")
             it.requestMatchers(HttpMethod.POST, "/api/v1/fizzbuzz/**").hasAnyRole("EMPLOYEE", "ADMIN")
             it.requestMatchers(HttpMethod.GET, "/api/v1/log/**").hasAnyRole("ADMIN")
