@@ -19,7 +19,8 @@ class TransformCommandServiceImpl(private val kafkaTemplate: KafkaTemplate<UUID,
             val transformSuccessEvent = transformCommand.toFizzBuzzTransformSuccessEvent(
                 OffsetDateTime.now(),
                 "Transformation successful - ticket: ${transformCommand.ticket}, user: ${transformCommand.user}",
-                output
+                output,
+                this.javaClass.name
             )
             val producerRecord = ProducerRecord(
                 KafkaTopics.TRANSFORM_EVENT_TOPIC,
@@ -31,7 +32,11 @@ class TransformCommandServiceImpl(private val kafkaTemplate: KafkaTemplate<UUID,
 
         } catch (e: Exception) {
             val transformFailedEvent =
-                transformCommand.toFizzBuzzTransformFailedEvent(OffsetDateTime.now(), e.localizedMessage)
+                transformCommand.toFizzBuzzTransformFailedEvent(
+                    OffsetDateTime.now(),
+                    e.localizedMessage,
+                    this.javaClass.name
+                )
             val producerRecordException = ProducerRecord(
                 KafkaTopics.TRANSFORM_EVENT_TOPIC,
                 transformFailedEvent.ticket,

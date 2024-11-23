@@ -15,12 +15,13 @@ data class FizzBuzzTransformCommand(
 fun FizzBuzzTransformCommand.toFizzBuzzTransformSuccessEvent(
     eventCreatedAt: OffsetDateTime,
     message: String,
-    result: String
+    result: String,
+    packageName: String,
 ) = FizzBuzzTransformSuccessEvent(
     this.ticket,
     this.user,
     this.inputNumber,
-    this.packageName,
+    packageName,
     eventCreatedAt,
     message,
     result,
@@ -29,11 +30,12 @@ fun FizzBuzzTransformCommand.toFizzBuzzTransformSuccessEvent(
 fun FizzBuzzTransformCommand.toFizzBuzzTransformFailedEvent(
     eventCreatedAt: OffsetDateTime,
     message: String,
+    packageName: String,
 ) = FizzBuzzTransformFailedEvent(
     this.ticket,
     this.user,
     this.inputNumber,
-    this.packageName,
+    packageName,
     eventCreatedAt,
     message,
 )
