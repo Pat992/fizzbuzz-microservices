@@ -1,6 +1,6 @@
 # FizzBuzz Microservices Edition
 
-*I don't remember why and how i created this, but I forgot to push the updated documentation.*
+*I don't remember why and how i created this.*
 
 ## About
 
