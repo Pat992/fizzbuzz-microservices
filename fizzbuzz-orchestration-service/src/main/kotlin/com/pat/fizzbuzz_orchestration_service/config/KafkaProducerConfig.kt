@@ -3,6 +3,7 @@ package com.pat.fizzbuzz_orchestration_service.config
 import com.pat.config.buildTopic
 import com.pat.config.producerConfigs
 import com.pat.properties.KafkaTopics
+import org.apache.kafka.clients.admin.NewTopic
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
@@ -19,11 +20,11 @@ class KafkaProducerConfig {
     fun kafkaTemplate(): KafkaTemplate<UUID, Any> = KafkaTemplate(producerFactory())
 
     @Bean
-    fun buildDatabaseCommandTopic() = buildTopic(KafkaTopics.DATABASE_COMMAND_TOPIC)
+    fun buildDatabaseCommandTopic(): NewTopic = buildTopic(KafkaTopics.DATABASE_COMMAND_TOPIC)
 
     @Bean
-    fun buildLoggingCommandTopic() = buildTopic(KafkaTopics.LOGGING_COMMAND_TOPIC)
+    fun buildLoggingCommandTopic(): NewTopic = buildTopic(KafkaTopics.LOGGING_COMMAND_TOPIC)
 
     @Bean
-    fun buildTransformCommandTopic() = buildTopic(KafkaTopics.TRANSFORM_COMMAND_TOPIC)
+    fun buildTransformCommandTopic(): NewTopic = buildTopic(KafkaTopics.TRANSFORM_COMMAND_TOPIC)
 }
